@@ -21,7 +21,7 @@ public class Usuario {
 
     //Cédula única del usuario
     @NotBlank (message = "La cédula es obligatoria!")
-    @Size(max = 9)
+    @Pattern(regexp = "\\d{9}", message = "La cédula debe tener 9 dígitos")
     @Column(unique = true, nullable = false) 
     private String cedula;
 
@@ -38,7 +38,6 @@ public class Usuario {
 
     //Contraseña del usuario
     @NotBlank(message = "La contraseña es obligatoria!")
-    @Size(min = 6, max = 12, message = "La contraseña debe tener entre 6 y 12 caracteres")
     private String password;
 
     //Rol del usuario, se dejo rol de ENTRENADOR o CLIENTE

@@ -18,7 +18,7 @@ public class SecurityConfig {
            .authorizeHttpRequests(auth -> auth
             
              //Permite el registro y el acceso a la consola H2
-             .requestMatchers("/registro", "/h2-console/**", "/css/**").permitAll()
+             .requestMatchers("/registro/**", "/h2-console/**", "/css/**").permitAll()
              //La administración y entrenamiento requiere rol ENTRENADOR
              .requestMatchers("/entrenador/**").hasRole("ENTRENADOR")
              //Las demás rutas neceistan que el usuario haya iniciado sesión
@@ -27,7 +27,9 @@ public class SecurityConfig {
 
             //Configurar el inicio de sesión utilizando el correo
             .formLogin(form -> form
+                .loginPage("/login")
                 .usernameParameter("email")
+                .defaultSuccessUrl("/inicio", true)
                 .permitAll()
             )
 

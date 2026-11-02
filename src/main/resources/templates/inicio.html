@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http:/www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio - Gimnasio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!--Barra superior del sistema-->
+    <nav class="navbar navbar-darkk bg-dark px-3">
+        <span class="navbar-brand">Sistema de Gimnasio</span>
+
+        <div class="d-flex align-items-center gap-3">
+            <span class="text-white">Hola,<b th:text="${#authentication.name}"></b></span>
+
+            <!--Botón para poder cerrar sesión-->
+            <form th:action="@{/logout}" method="post">
+                <button class="btn btn-outline-ligth btn-sm">Salir</button>
+            </form>
+        </div>
+    </nav>     
+
+    <div class="container mt-5">
+
+        <h3 class="mb-2">Bienvenido al sistema del gimnasio</h3>
+        <p class="text-muted">Selecciona el módulo que deseas utilizar</p>
+
+        <div class="row mt-4">
+
+            <!--Opcion para gestionar a los usuarios-->
+            <div class="col-md-6 mb-3">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Gestión de usuarios</h5>
+                        <p class="card-text">Consultar y administrar información de los usuarios</p>
+                        <a th:href="@{/usuarios}" class="btn btn-primary">Ver usuarios</a>
+                    </div>
+                </div>
+            </div>        
+
+            <!--Opción para poder gestionar clases-->
+            <div class="col-md-6 mb-3">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Gestión de clases</h5>
+                        <p class="card-text">Consultar y administrar información de las clases del gimnasio</p>
+                        <a th:href="@{/clases}" class="btn btn-primary">Ver clases</a>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</body>
+</html>          

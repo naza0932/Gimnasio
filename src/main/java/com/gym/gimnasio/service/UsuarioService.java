@@ -54,6 +54,11 @@ public class UsuarioService {
             throw new IllegalArgumentException("La cédula ya esta registrada!");
         }
 
+        //Comprobar que la contraseña tenga entre 8 y 12 caracteres
+        if (usuario.getPassword().length() < 8 || usuario.getPassword().length() > 12) {
+            throw new IllegalArgumentException("La contraseña debe tener entre 8 y 12 caracteres");
+        }
+
         //Cifrar la contraseña antes de guardarla
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         return repo.save(usuario);
