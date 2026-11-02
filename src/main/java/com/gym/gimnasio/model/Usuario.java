@@ -37,7 +37,6 @@ public class Usuario {
     private String telefono;
 
     //Contraseña del usuario
-    @NotBlank(message = "La contraseña es obligatoria!")
     private String password;
 
     //Rol del usuario, se dejo rol de ENTRENADOR o CLIENTE

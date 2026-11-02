@@ -54,6 +54,11 @@ public class UsuarioService {
             throw new IllegalArgumentException("La cédula ya esta registrada!");
         }
 
+        //Comprobar que la contraseña sea obligatoria
+        if (usuario.getPassword() == null || usuario.getPassword().isBlank()){
+            throw new IllegalArgumentException("La contraseña es obligatoria!");
+        }
+
         //Comprobar que la contraseña tenga entre 8 y 12 caracteres
         if (usuario.getPassword().length() < 8 || usuario.getPassword().length() > 12) {
             throw new IllegalArgumentException("La contraseña debe tener entre 8 y 12 caracteres");
@@ -92,8 +97,18 @@ public class UsuarioService {
         existente.setTelefono(datos.getTelefono());
         existente.setRol(datos.getRol());
 
+        //Actualizar el estado del usuario
+        existente.setActivo(datos.isActivo());
+
         //Cambiar la contraseña si se proporciona una nueva
         if (datos.getPassword() != null && !datos.getPassword().isBlank()) {
+
+            //Comprobar que la contraseña tenga entre 8 y 12 caracteres
+            if (datos.getPassword().length() < 8 || datos.getPassword().length() > 12){
+                throw new IllegalArgumentException("La contraseña debe tener entre 8 y 12 caracteres");
+            }
+
+            //Cifrar la nueva contraseña antes de guardarla
             existente.setPassword(passwordEncoder.encode(datos.getPassword()));
         }
 
