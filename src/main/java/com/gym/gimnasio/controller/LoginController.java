@@ -17,5 +17,11 @@ public class LoginController {
     @GetMapping("/")
     public String inicio(){
         return "redirect:/inicio";
-    }    
+    }  
+    
+    //Mostrar la página principal del gimnasio
+    @GetMapping("/inicio")
+    public String mostrarInicio(){
+        return "inicio";
+    }
 }

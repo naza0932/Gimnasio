@@ -19,8 +19,10 @@ public class SecurityConfig {
             
              //Permite el registro y el acceso a la consola H2
              .requestMatchers("/registro/**", "/h2-console/**", "/css/**").permitAll()
-             //La administración y entrenamiento requiere rol ENTRENADOR
-             .requestMatchers("/entrenador/**").hasRole("ENTRENADOR")
+             //Permite el acceso al login
+             .requestMatchers("/login").permitAll()
+             //La gestión de usuarios y clases requiere el rol de ENTRENADOR
+             .requestMatchers("/usuarios/**", "/clases/**").hasRole("ENTRENADOR")
              //Las demás rutas neceistan que el usuario haya iniciado sesión
              .anyRequest().authenticated()
             )
