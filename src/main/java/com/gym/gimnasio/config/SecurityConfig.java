@@ -21,8 +21,12 @@ public class SecurityConfig {
              .requestMatchers("/registro/**", "/h2-console/**", "/css/**").permitAll()
              //Permite el acceso al login
              .requestMatchers("/login").permitAll()
-             //La gestión de usuarios y clases requiere el rol de ENTRENADOR
-             .requestMatchers("/usuarios/**", "/clases/**").hasRole("ENTRENADOR")
+             //La gestión de usuarios requiere ser ENTRENADOR
+             .requestMatchers("/usuarios/**").hasRole("ENTRENADOR")
+             //Crear y editar clases requiere ser ENTRENADOR
+             .requestMatchers("/clases/nueva", "/clases/guardar", "/clases/*/editar", "/clases/*/actualizar").hasRole("ENTRENADOR")
+             //Los usuarios autenticados pueden consultar las clases
+             .requestMatchers("/clases/**").authenticated()
              //Las demás rutas neceistan que el usuario haya iniciado sesión
              .anyRequest().authenticated()
             )

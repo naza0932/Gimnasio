@@ -20,4 +20,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     //Buscar el usuario por nombre sin importar mayusculas o minúsculas
     List<Usuario> findByNombreIgnoreCaseContaining(String nombre);
 
+    //Buscar usuarios por rol, los que esten activos
+    List<Usuario> findByRolAndActivoTrue(String rol);
+
 }

@@ -125,5 +125,9 @@ public class UsuarioService {
         repo.save(usuario);
     }
 
+    //Listar entrenadores activos
+    public List<Usuario> listarEntrenadores(){
+        return repo.findByRolAndActivoTrue("ENTRENADOR");
+    }
     
 }
