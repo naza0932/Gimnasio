@@ -17,10 +17,14 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     //Comprobar si ya existe una cédula igual
     boolean existsByCedula(String cedula);
 
+    //Comprobar si la cédula pertenece a otro usuario
+    boolean existsByCedulaAndIdNot(String cedula, Long id);
+
     //Buscar el usuario por nombre sin importar mayusculas o minúsculas
     List<Usuario> findByNombreIgnoreCaseContaining(String nombre);
 
     //Buscar usuarios por rol, los que esten activos
     List<Usuario> findByRolAndActivoTrue(String rol);
+
 
 }

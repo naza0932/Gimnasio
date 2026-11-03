@@ -50,6 +50,29 @@
                     </div>
                 </div>
             </div> 
+
+            <!--Opción para que los clientes puedan ver las clases-->
+            <div class="col-md-6 mb-3" sec:authorize="hasRole('CLIENTE')">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Clases disponibles</h5>
+                        <p class="card-text">Consulte las clases disponibles de nuestro gimnasio</p>
+                        <a th:href="@{/clases}" class="btn btn-primary">Consultar clases</a>
+                    </div>
+                </div>
+            </div> 
+
+            <!--Opción para que los clientes puedan editar su perfil-->
+            <div class="col-md-6 mb-3" sec:authorize="hasRole('CLIENTE')">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Mi perfil</h5>
+                        <p class="card-text">Consultar y actualizar mis datos personales</p>
+                        <a th:href="@{/mi-perfil}" class="btn btn-primary">Editar mi perfil</a>
+                    </div>
+                </div>
+            </div> 
+
         </div>
     </div>
 </body>

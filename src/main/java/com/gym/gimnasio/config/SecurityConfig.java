@@ -23,6 +23,8 @@ public class SecurityConfig {
              .requestMatchers("/login").permitAll()
              //La gestión de usuarios requiere ser ENTRENADOR
              .requestMatchers("/usuarios/**").hasRole("ENTRENADOR")
+             //El perfil y reservas requiere ser CLIENTE
+             .requestMatchers("/mi-perfil/**", "/reservas/**").hasRole("CLIENTE")
              //Crear y editar clases requiere ser ENTRENADOR
              .requestMatchers("/clases/nueva", "/clases/guardar", "/clases/*/editar", "/clases/*/actualizar").hasRole("ENTRENADOR")
              //Los usuarios autenticados pueden consultar las clases

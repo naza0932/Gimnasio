@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Gestión de clases</title>
@@ -12,11 +12,15 @@
     <h2>Gestión de clases del gimnasio</h2>
 
 
-    <!--Mnesaje de confirmación-->
+    <!--Mensaje de confirmación-->
     <div th:if="${mensaje}" class="alert alert-success" th:text="${mensaje}"></div>
 
-    <!--Botón para registrar una clase-->
-    <a th:href="@{/clases/nueva}" class="btn btn-success mb-3">Registrar nueva clase</a>
+    <!--Mensaje de error-->
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+
+    <!--Botón para registrar una clase, solo para rol ENTRENADOR-->
+    <a sec:authorize="hasRole('ENTRENADOR')" th:href="@{/clases/nueva}" class="btn btn-success mb-3">Registrar nueva clase</a>
 
     <!--Tabla de clases-->
     <table class="table table-bordered table-striped">
@@ -31,7 +35,11 @@
                 <th>Hora de inicio</th>
                 <th>Hora de finalización</th>
                 <th>Capacidad</th>
-                <th>Acciones</th>
+                <th>Cupos ocupados</th>
+                <th>Cupos disponibles</th>
+
+                <th sec:authorize="hasRole('ENTRENADOR')">Acciones</th>
+                <th sec:authorize="hasRole('CLIENTE')">Reservar</th>
             </tr> 
         </thead>
 
@@ -46,11 +54,21 @@
                 <td th:text="${clase.horaInicio}"></td>
                 <td th:text="${clase.horaFin}"></td>
                 <td th:text="${clase.capacidad}"></td>
+                <td th:text="${cuposOcupados.get(clase.id)}"></td>
+                <td th:text="${clase.capacidad - cuposOcupados.get(clase.id)}"></td>
 
-                <td>
+                <td sec:authorize="hasRole('ENTRENADOR')">
                     <a th:href="@{/clases/{id}/editar(id=${clase.id})}" class="btn btn-primary btn-sm">
                         Editar
                     </a>
+                </td>
+
+                <td sec:authorize="hasRole('CLIENTE')">
+                    <form th:action="@{/reservas/guardar/{id}(id=${clase.id})}" method="post">
+                      <button type="submit" class="btn btn-success btn-sm">
+                       Reservar
+                      </button>
+                    </form>
                 </td>
             </tr>    
         </tbody>

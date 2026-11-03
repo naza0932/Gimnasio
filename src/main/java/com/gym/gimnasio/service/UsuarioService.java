@@ -40,6 +40,12 @@ public class UsuarioService {
                  orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado" + id));
     }
 
+    //Buscar usuario por correo
+    public Usuario buscarPorEmail(String email) {
+        return repo.findByEmail(email)
+                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado:" + email));
+    }
+
     //Crear usuario
     @Transactional
     public Usuario crear(Usuario usuario){
@@ -113,6 +119,40 @@ public class UsuarioService {
         }
 
         return repo.save(existente);
+    }
+
+    //Actualiza el perfil de cliente
+    @Transactional 
+    public Usuario actualizarPerfil(Long id, Usuario datos) {
+
+        //Buscar el usuario que se quiere modificar
+        Usuario existente = buscarPorId(id);
+
+        //Comprobar si la cédula ya pertence a otro
+        if (!existente.getCedula().equals(datos.getCedula()) && repo.existsByCedulaAndIdNot(datos.getCedula(), id)) {
+            throw new IllegalArgumentException("La cédula ya esta registrada!");
+
+        }
+
+        //Actualizar los datos personales
+        existente.setNombre(datos.getNombre());
+        existente.setCedula(datos.getCedula());
+        existente.setTelefono(datos.getTelefono());
+
+        //Cambiar la contraseña si se da una nueva
+         if (datos.getPassword() != null && !datos.getPassword().isBlank()) {
+
+            //Comprobar que la contraseña tenga entre 8 y 12 caracteres
+            if (datos.getPassword().length() < 8 || datos.getPassword().length() > 12){
+                throw new IllegalArgumentException("La contraseña debe tener entre 8 y 12 caracteres");
+            }
+
+            //Cifrar la nueva contraseña antes de guardarla
+            existente.setPassword(passwordEncoder.encode(datos.getPassword()));
+        }
+
+        return repo.save(existente);
+
     }
 
     //Desactivar usuario
